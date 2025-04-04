@@ -1,0 +1,388 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Ilia Filinin">
+    <meta name="google-signin-client_id" content="887094594915-87tji5rnjfeesa771a92rtttkms4hq12.apps.googleusercontent.com">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/treesBlog.css" media="screen">
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <style>
+        #logout-btn { display: none; }
+    </style>
+
+    <title>Najlepšie mestá na cestovanie</title>
+</head>
+
+<body>
+<header>
+    <h1>Najlepšie mestá na cestovanie</h1>
+
+<div class="menu">
+    <button id="menuTitle">Menu</button>
+
+    <nav id="menuIts" class="menu mnHide">
+            <a href="#welcome">Welcome!</a>
+            <a href="#articles">Articles</a>
+            <a href="#opinions">Visitor opinions</a>
+            <a href="#addOpinion">Add your opinion</a>
+            <a href="#artInsert">Add Article</a>
+    </nav>
+
+</div>
+<div>
+    <div id="g_id_onload"
+         data-client_id="887094594915-87tji5rnjfeesa771a92rtttkms4hq12.apps.googleusercontent.com"
+         data-context="signin"
+         data-callback="onSignIn"
+         data-auto_prompt="false"></div>
+    <div class="g_id_signin" data-type="standard"></div>
+    <button id="logout-btn" onclick="signOut()">Logout</button>
+</div>
+
+</header>
+
+<main id="router-view">
+</main>
+
+<footer>
+    <h3>Website creator</h3>
+    <p>Ilia Filinin</p>
+    <p><a href="mailto:ilia.filinin@student.tuke.sk">ilia.filinin@student.tuke.sk</a></p>
+</footer>
+
+
+<!--Templates for html, dynamically inserted by the router -->
+
+<script id="template-welcome" type="text/template">
+    <article>
+        <h2>Welcome!</h2>
+        <p>
+            Vitajte na mojom blogu, kde sa s vami podelím o svoje obľúbené miesta na cestovanie po celom svete. 
+            Každý článok obsahuje tipy, atrakcie a osobné skúsenosti, ktoré vám pomôžu naplánovať vašu ďalšiu cestu.
+        </p>
+
+        </p>
+    </article>
+</script>
+
+
+<script id="template-articles" type="text/template">
+    {{#articles}}
+    <article>
+        <h2><a href="{{detailLink}}">{{title}}</a></h2>
+        <p>by {{author}}</p>
+    </article>
+    {{/articles}}
+
+    <footer class="menuLink">
+        <a href="#menuTitle">Back to the menu</a>
+        {{#prevPage}}
+        <a href="{{prevPage}}" class="linkAsButton"><< Previous page</a>
+        {{/prevPage}}
+        {{#nextPage}}
+        <a href="{{nextPage}}" class="linkAsButton">Next page >></a>
+        {{/nextPage}}
+    </footer>
+</script>
+
+
+
+
+<script id="template-articles-error" type="text/template">
+
+    <article>
+        <h2>Articles acquisition failed</h2>
+        <p>
+            {{errMessage}}
+        </p>
+    </article>
+    <footer  class="menuLink"><a href="#menuTitle">Back to the menu</a></footer>
+
+</script>  
+
+<script id="template-opinions" type="text/template">
+    <article  id="artOpinions">
+        <h2>Visitor Opinions</h2>
+        {{#.}}
+        <section>
+            <h3>{{name}} ({{email}})</h3>
+            <p><strong>Rating:</strong> {{rating}}</p>
+            <p><strong>Liked features:</strong> {{likedFeatures}}</p>
+            <p><strong>Keywords:</strong> {{keywords}}</p>
+            <p><strong>Comment:</strong> {{comment}}</p>
+            <p>{{willReturn}}</p>
+            <p><strong>Submitted on:</strong> {{created}}</p>
+        </section>
+        {{/.}}
+        {{^.}}
+        <section>
+            Sorry, no opinions found.
+        </section>
+        {{/.}}
+        <footer  class="menuLink"><a href="#menuTitle">Back to the menu</a></footer>
+    </article>
+</script>
+
+<script id="template-addOpinion" type="text/template">
+    <article id="artOpnFrm">
+        <h2>Your Opinion</h2>
+        <p>
+            Please, use the form below to state your opinion about this page.
+        </p>
+        <form id="opnFrm">
+            <label for="nameElm">Your name: *</label>
+            <input type="text" name="login" id="nameElm" size="20" maxlength="50"
+                   placeholder="Enter your name here" required />
+            <br><br>
+
+            <label for="emailElm">Your email: *</label>
+            <input type="email" name="email" id="emailElm" size="30" maxlength="50"
+                   placeholder="Enter your email here" required />
+            <br><br>
+
+            <label for="imageElm">Image URL:</label>
+            <input type="url" name="image" id="imageElm" 
+                   placeholder="https://example.com/image" />
+            <br><br>
+
+            <p>Page Rating: *</p>
+            <label><input type="radio" name="rating" value="Excellent" required> Excellent</label>
+            <label><input type="radio" name="rating" value="Good"> Good</label>
+            <label><input type="radio" name="rating" value="Average"> Average</label>
+            <br><br>
+
+            <p>What did you like about the page?</p>
+            <label><input type="checkbox" name="likedFeatures[]" value="Design"> Page Design</label>
+            <label><input type="checkbox" name="likedFeatures[]" value="Content"> Article Content</label>
+            <label><input type="checkbox" name="likedFeatures[]" value="Navigation"> Navigation</label>
+            <br><br>
+
+            <label for="keywordsElm">Keywords:</label>
+            <input list="keywordsList" id="keywordsElm" name="keywords" placeholder="Choose or type a keyword">
+            <datalist id="keywordsList">
+                <option value="Travel">
+                <option value="Blog">
+                <option value="Tips">
+                <option value="Cities">
+                <option value="Attractions">
+            </datalist>
+            <br><br>
+
+            <label for="opnElm">Your comments: *</label><br>
+            <textarea name="comment" id="opnElm" cols="50" rows="5" 
+                      placeholder="Express your opinion here" required></textarea>
+            <br><br>
+
+            <input type="checkbox" id="willReturnElm" />
+            <label for="willReturnElm">I will definitely return to this page.</label>
+            <br><br>
+
+            <button type="submit">Send</button>
+            <button type="reset">Reset</button>
+        </form>
+        <footer class="menuLink"><a href="#menuTitle">Back to the menu</a></footer>
+    </article>
+</script>
+
+<script id="template-article" type="text/template">
+    <article>
+        <h3>{{title}}</h3>
+        <p>
+            by {{author}}
+        </p>
+        {{#imageLink}}
+        <figure>
+            <img src="{{imageLink}}" alt="article figure" />
+        </figure>
+        {{/imageLink}}
+        <div>{{{content}}}</div>
+        <p>
+            Keywords:
+            {{tags}}
+        </p>
+    </article>
+
+    <footer>
+        <a href="{{backLink}}" class="linkAsButton"><< Back</a>
+        <a href="{{editLink}}" class="linkAsButton">Edit</a>
+        <a href="{{deleteLink}}" class="linkAsButton">Delete</a>
+        <a href="#menuTitle" class="linkAsButton">Up to the menu</a>
+    </footer>
+
+</script>      
+
+<script id="template-article-form" type="text/template">
+    <article>
+        <h2>{{formTitle}}</h2> <br><br>
+
+        <form id="articleForm">
+            <label for="author">Author:</label>
+            <input type="text" name="author" id="author" value="{{author}}" size="50" 
+                   title="Article author, max. length 100 characters." 
+                   maxlength="100" placeholder="e.g. Ilia Filinin" />
+            <br>
+            <label for="title">Title:</label>
+            <input type="text" name="title" id="title" value="{{title}}" size="50"  
+                   maxlength="100" pattern="\S[\S\s]*" placeholder="e.g. My story." required 
+                   title="Article title, mandatory item, max. length: 100 characters. 
+The first character must not be a space."  />
+            <br>
+            <label for="imageLink">Image (url):</label>
+            <input type="url" name="imageLink" id="imageLink" value="{{imageLink}}" size="50" 
+                   title="Image URL, max. length 100 characters." maxlength="100"/>
+            <br>
+            <label></label>
+            <button type="button" id="btShowFileUpload">
+                Upload image
+            </button>
+
+            <fieldset class="added hiddenElm" id="fsetFileUpload">
+                <legend>Image Upload</legend>
+                <input type="file" id="flElm" name="file" accept="image/jpeg, image/png"/>
+                <br />
+                <button type="button" id="btFileUpload">
+                    Send image to server </button>
+                <button type="button" id="btCancelFileUpload">
+                    Cancel uploading </button>
+            </fieldset>
+
+
+            <br>
+            <label for="content">Article content:</label>
+            <textarea
+                    name="content" id="content" spellcheck="true" lang="sk"
+                    cols="50" rows="20" required
+                    title="Article content, mandatory item, can be plain text or in HTML.">
+              {{content}}
+            </textarea>
+            <br>
+            <label for="tags">Keywords:</label>
+            <input  type="text" name="tags" id="tags" value="{{tags}}" size="50"
+                    title="Keyword list, comma separated." placeholder="e.g. village, drama" />
+            <br> <br>
+            <button type="reset"> Reset Form </button>
+            <button type="submit"> {{submitBtTitle}} </button>
+
+        </form>
+    </article>
+
+    <footer>
+        <a href="{{backLink}}" class="linkAsButton"><< Back</a>
+        <a href="#menuTitle" class="linkAsButton">Up to the menu</a>
+    </footer>
+</script> 
+
+<script>
+    let userProfile = null;
+
+// Функция автозаполнения данных пользователя
+function autoFillUserData() {
+    const userProfile = JSON.parse(localStorage.getItem('userProfile'));
+
+    if (userProfile) {
+        // Автоматически заполняем имя автора
+        const nameInputs = document.querySelectorAll('[name="author"], #nameElm, #commentAuthor');
+        nameInputs.forEach(input => input.value = userProfile.name);
+
+        // Автоматически заполняем почту
+        const emailInputs = document.querySelectorAll('[name="email"], #emailElm');
+        emailInputs.forEach(input => input.value = userProfile.email);
+    }
+}
+
+// Google Sign-In callback
+function decodeBase64Unicode(base64) {
+    return decodeURIComponent(escape(atob(base64)));
+}
+
+function onSignIn(response) {
+    const credential = JSON.parse(decodeBase64Unicode(response.credential.split('.')[1]));
+
+    userProfile = {
+        name: credential.name,
+        email: credential.email,
+    };
+
+    // Сохраняем данные пользователя в localStorage
+    localStorage.setItem('userProfile', JSON.stringify(userProfile));
+
+    document.getElementById('logout-btn').style.display = 'block';
+    document.querySelector('.g_id_signin').style.display = 'none';
+
+    autoFillUserData();
+}
+
+// Sign out user
+function signOut() {
+    userProfile = null;
+    google.accounts.id.disableAutoSelect();
+
+    document.getElementById('logout-btn').style.display = 'none';
+    document.querySelector('.g_id_signin').style.display = 'block';
+
+    // Очищаем данные в localStorage
+    localStorage.removeItem('userProfile');
+
+    const nameInputs = document.querySelectorAll('[name="author"], #nameElm, #commentAuthor');
+    nameInputs.forEach(input => input.value = '');
+
+    const emailInputs = document.querySelectorAll('[name="email"], #emailElm');
+    emailInputs.forEach(input => input.value = '');
+}
+
+// Initialize form handlers
+document.addEventListener('DOMContentLoaded', () => {
+    // Автоматически заполняем данные пользователя, если он авторизован
+    autoFillUserData();
+
+    // Слушаем изменение хеша в URL, чтобы отслеживать переходы по меню
+    window.addEventListener('hashchange', () => {
+        if (userProfile) {
+            autoFillUserData();  // Вызываем авто-заполнение данных при переходе
+        }
+    });
+
+    // Прослушиваем навигацию по меню и вызываем autoFillUserData при переходе
+    const menuLinks = document.querySelectorAll('.menu a');
+    menuLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            
+            if (userProfile) {
+                autoFillUserData();
+            }
+        });
+    });
+});
+</script>
+
+<script type="text/template" id="template-comments">
+    <h3>Comments</h3>
+    <ul>
+        {{#comments}}
+        <li>
+            <strong>{{author}}</strong>: {{text}}<br>
+            <small>{{createdAt}}</small>
+        </li>
+        {{/comments}}
+        {{^comments}}
+        <p>No comments yet. Be the first to comment!</p>
+        {{/comments}}
+    </ul>
+</script>
+
+<script type="text/template" id="template-comment-form">
+    <form id="commentForm">
+        <input id="commentAuthor" type="text" placeholder="Your name" required><br>
+        <textarea id="commentText" placeholder="Write your comment here" required></textarea><br>
+        <button type="submit">Submit</button>
+    </form>
+</script>
+
+
+<script  type="module" src="js/index.js"></script>
+<script type="module" src="js/addOpinion.js"></script>
+<script type="module" src="js/articleFormsHandler.js"></script>
+
+</body>
+</html>

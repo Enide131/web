@@ -1,0 +1,317 @@
+/* Enhanced Styles for treesBlog.css */
+
+html {
+    font-size: 100%;
+    font-family: "Tw Cen MT", Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    text-align: justify;
+    color: #333;
+}
+
+a:link, a:visited {
+    text-decoration: none;
+    color: #4caf50;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: #388e3c;
+}
+
+body > * {
+    margin: 0.5rem;
+}
+
+body > header {
+    border-radius: 1rem;
+    padding: 1rem;
+    text-align: center;
+    background: linear-gradient(90deg, #4caf50, #2e7d32);
+    color: white;
+}
+
+body > footer {
+    font-size: 0.8rem;
+    background-color: #f4f4f9;
+    text-align: center;
+    padding: 1rem;
+    color: #333;
+    margin-top: 1rem;
+}
+
+main footer {
+    margin-top: 1rem;
+}
+
+main > article {
+    background-color: #e8f5e9;
+    border-radius: 1rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+main > article > * {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+
+main > article > h2 {
+    background-color: #c8e6c9;
+    border-radius: 1rem;
+    margin: 0;
+    padding: 0.5rem;
+    color: #2e7d32;
+}
+
+body > aside {
+    background-color: #f1f8e9;
+    border-radius: 1rem;
+    color: #757575;
+    font-size: 0.9em;
+    height: auto;
+    padding: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    background-color: #f4f4f9;
+}
+
+li {
+    flex-grow: 1;
+}
+
+body > footer {
+    order: 1;
+}
+
+@media only screen and (min-width: 600px) {
+    body {
+        min-width: 35rem;
+        max-width: 60rem;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media only screen and (max-width: 599px) {
+    body {
+        width: 100%;
+    }
+}
+
+.menu {
+    text-align: left;
+    padding-left: 0.5rem;
+}
+
+#menuIts {
+    position: absolute;
+    padding: 0.5rem;
+    max-width: 10em;
+    min-width: 8em;
+    border-radius: 0.5rem;
+    background-color: #4caf50;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#menuIts > a {
+    display: block;
+    color: white;
+    padding: 0.5rem;
+}
+
+#menuTitle {
+    border: 0;
+    background-color: #4caf50;
+    color: white;
+    outline: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+}
+
+#menuTitle:hover, #menuIts > a:hover {
+    text-decoration: none;
+    color: #ffffff;
+    background-color: #388e3c;
+}
+
+.mnHide {
+    display: none;
+}
+
+.mnShow {
+    display: block;
+}
+
+label {
+    vertical-align: top;
+    display: inline-block;
+    min-width: 6em;
+    font-weight: bold;
+    color: #333;
+}
+
+form {
+    padding: 1rem;
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden; 
+}
+
+form input, form textarea {
+    width: calc(100% - 1rem);
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+form button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 0.75rem;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+form button:hover {
+    background-color: #388e3c;
+}
+
+form input[type="checkbox"] {
+    margin-right: 0.5rem;
+    vertical-align: middle;
+}
+
+form label[for="willReturnElm"] {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+h3 > i {
+    font-size: 0.9em;
+    color: #757575;
+}
+
+.user-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+#profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.profile-section p {
+    margin: 0;
+}
+
+/* Style for Google Sign-In and Logout buttons */
+#logout-btn,
+.g_id_signin {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 100;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#logout-btn:hover,
+.g_id_signin:hover {
+    background-color: #388e3c;
+}
+
+.g_id_signin {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#logout-btn {
+    display: none;
+}
+
+#addCommentBtn {
+    background-color: #ffd700;
+    border: 1px solid #d4af37;
+    padding: 5px 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.comment-box {
+    background-color: #fff7a3;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.comment-box p {
+    margin: 0;
+    line-height: 1.5;
+}
+
+.comment-box strong {
+    color: #333;
+    font-size: 1.1em;
+}
+
+.comment-box small {
+    color: #666;
+    font-size: 0.85em;
+    display: block;
+    margin-top: 5px;
+}
+
+#commentForm {
+    margin-top: 10px;
+}
+
+#commentForm textarea {
+    width: 100%;
+    height: 60px;
+    padding: 5px;
+    border: 1px solid #d4af37;
+    border-radius: 5px;
+}
+
+#commentForm button {
+    background-color: #ffd700;
+    border: 1px solid #d4af37;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+}
+
+#commentForm button:hover {
+    background-color: #ffc107;
+}
